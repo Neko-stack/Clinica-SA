@@ -1,4 +1,4 @@
-import type { Paciente, PrismaClient } from "../prisma/generated/prisma/";
+import type { Paciente, PrismaClient } from "../prisma/generated/prisma";
 import { prisma } from "../prisma/prisma";
 
 export class PacienteRepository {
@@ -25,6 +25,9 @@ export class PacienteRepository {
                 email: dadosPaciente.email || "",
                 data_nascimento: new Date(dadosPaciente.data_nascimento || ""),
                 sexo: dadosPaciente.sexo || "",
+                convenio: dadosPaciente.convenio ?? null,
+                alergias: dadosPaciente.alergias ?? null,
+                observacoes: dadosPaciente.observacoes ?? null,
                 responsavel: dadosPaciente.responsavel ?? null
             }
         });

@@ -1,11 +1,5 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js" // Corrigido aqui
+  provider = "prisma-client-js"
   output   = "../prisma/generated/prisma"
 }
 
@@ -25,20 +19,18 @@ model Usuario {
   senha       String
   role        Role         @default(USER)
   tokens      Token[]
-  prontuarios Prontuario[] // Adicionado para fechar a relação com Prontuario
+  prontuarios Prontuario[]
 
   @@map("usuario")
 }
 
 model Exame {
-  id         Int      @id @default(autoincrement())
-  tipo_exame String
-  valor      Decimal
-  descricao  String
-  resultado  String
-  data_exame DateTime
-
-  // Relação adicionada para conectar o Exame ao Paciente
+  id          Int      @id @default(autoincrement())
+  tipo_exame  String
+  valor       Decimal
+  descricao   String
+  resultado   String
+  data_exame  DateTime
   paciente_id Int
   paciente    Paciente @relation(fields: [paciente_id], references: [id])
 
@@ -95,10 +87,13 @@ model Paciente {
   email           String
   data_nascimento DateTime
   sexo            String
+  convenio        String?
+  alergias        String?
+  observacoes     String?
   responsavel     String?
   Prontuario      Prontuario[]
   Consulta        Consulta[]
-  Exame           Exame[] // Agora a relação aqui funciona porque mapeamos dentro de Exame
+  Exame           Exame[]
 
   @@map("paciente")
 }

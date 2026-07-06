@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { Paciente } from "../prisma/generated/prisma/";
+import type { Paciente } from "../prisma/generated/prisma";
 import {
     pacienteService,
     PacienteService

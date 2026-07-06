@@ -1,4 +1,4 @@
-import type { Usuario } from "../prisma/generated/prisma/client";
+import type { Usuario } from "../prisma/generated/prisma";
 import { createHash } from "../utils/createHash";
 import bcrypt from "bcrypt";
 import { signTokenAcesso, signTokenRefresh } from "../utils/jwt";

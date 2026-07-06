@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { toast } from 'react-toastify'
-
-import axios from 'axios'
+import apiClient from '../../api/api'
 
 const RegisterUser = () => {
 
@@ -42,8 +41,9 @@ const RegisterUser = () => {
         setIsSaving(true)
 
         try {
-            await axios.post('http://localhost:3000/users', {
-                email, password
+            await apiClient.post('/cadastro', {
+                email,
+                senha: password
             })
 
             setIsSaving(false)

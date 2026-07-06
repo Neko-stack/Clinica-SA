@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { Usuario } from "../prisma/generated/prisma/client"
+import type { Usuario } from "../prisma/generated/prisma"
 import { AuthService, authService } from "../services/AuthService";
 
 class AuthController {

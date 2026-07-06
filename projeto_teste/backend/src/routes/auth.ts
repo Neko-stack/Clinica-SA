@@ -3,7 +3,7 @@ import { createHash } from "../utils/createHash";
 import { prisma } from "../prisma/prisma";
 import { signTokenAcesso, signTokenRefresh } from "../utils/jwt";
 import bcrypt from "bcrypt";
-import type { Usuario } from "../prisma/generated/prisma/client";
+import type { Usuario } from "../prisma/generated/prisma";
 import { authController } from "../controllers/AuthController";
 
 export const authRouter = Router();

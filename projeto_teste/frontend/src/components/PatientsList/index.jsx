@@ -1,56 +1,56 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
 import { FaUserAlt } from "react-icons/fa"
 import { Link } from "react-router"
+import apiClient from "../../api/api"
 
 const PatientsList = () => {
     const [patients, setPatients] = useState([])
     const [ages, setAges] = useState({})
 
     const [filters, setFilters] = useState({
-        name: "",
+        nome: "",
         email: "",
-        phone: "",
-        healthInsurance: "",
-        allergies: "",
+        telefone: "",
+        convenio: "",
+        alergias: "",
+        observacoes: "",
+        sexo: "",
     })
 
-    const calculateAge = (birthdate) => {
-        if (!birthdate) return "-"
+    const calcularIdade = (dataNascimento) => {
+        if (!dataNascimento) return "-"
 
-        const today = new Date()
-        const birthdateDate = new Date(birthdate)
+        const hoje = new Date()
+        const nascimento = new Date(dataNascimento)
 
-        let age = today.getFullYear() - birthdateDate.getFullYear()
-        const monthDiff = today.getMonth() - birthdateDate.getMonth()
+        let idade = hoje.getFullYear() - nascimento.getFullYear()
+        const diferencaMes = hoje.getMonth() - nascimento.getMonth()
 
         if (
-            monthDiff < 0 ||
-            (monthDiff === 0 && today.getDate() < birthdateDate.getDate())
+            diferencaMes < 0 ||
+            (diferencaMes === 0 && hoje.getDate() < nascimento.getDate())
         ) {
-            age--
+            idade--
         }
 
-        return age
+        return idade
     }
 
     useEffect(() => {
         const fetchPatients = async () => {
             try {
-                const response = await axios.get("http://localhost:3000/patients")
-                if (!response) return
-
-                const patientsData = response.data
+                const response = await apiClient.get("/pacientes")
+                const patientsData = response.data || []
 
                 const calculatedAges = {}
                 patientsData.forEach((patient) => {
-                    calculatedAges[patient.id] = calculateAge(patient.birthdate)
+                    calculatedAges[patient.id] = calcularIdade(patient.data_nascimento)
                 })
 
                 setAges(calculatedAges)
                 setPatients(patientsData)
             } catch (error) {
-                console.error("Erro ao obter os dados de paciente", error)
+                console.error("Erro ao obter os dados de pacientes", error)
             }
         }
 
@@ -68,55 +68,59 @@ const PatientsList = () => {
 
     const clearFilters = () => {
         setFilters({
-            name: "",
+            nome: "",
             email: "",
-            phone: "",
-            healthInsurance: "",
-            allergies: "",
+            telefone: "",
+            convenio: "",
+            alergias: "",
+            observacoes: "",
+            sexo: "",
         })
     }
 
     const filteredPatients = patients.filter((patient) => {
-        const nameMatch = patient.fullName
+        const nameMatch = patient.nome
             ?.toLowerCase()
-            .includes(filters.name.toLowerCase())
+            .includes(filters.nome.toLowerCase())
 
         const emailMatch = patient.email
             ?.toLowerCase()
             .includes(filters.email.toLowerCase())
 
-        const phoneMatch = patient.phone
+        const phoneMatch = patient.telefone
             ?.toLowerCase()
-            .includes(filters.phone.toLowerCase())
+            .includes(filters.telefone.toLowerCase())
 
-        const insuranceMatch = patient.healthInsurance
+        const convenioMatch = (patient.convenio || "")
+            .toLowerCase()
+            .includes(filters.convenio.toLowerCase())
+
+        const alergiasMatch = (patient.alergias || "")
+            .toLowerCase()
+            .includes(filters.alergias.toLowerCase())
+
+        const observacoesMatch = (patient.observacoes || "")
+            .toLowerCase()
+            .includes(filters.observacoes.toLowerCase())
+
+        const sexoMatch = patient.sexo
             ?.toLowerCase()
-            .includes(filters.healthInsurance.toLowerCase())
+            .includes(filters.sexo.toLowerCase())
 
-        const allergiesMatch = patient.allergies
-            ?.toLowerCase()
-            .includes(filters.allergies.toLowerCase())
-
-        return (
-            nameMatch &&
-            emailMatch &&
-            phoneMatch &&
-            insuranceMatch &&
-            allergiesMatch
-        )
+        return nameMatch && emailMatch && phoneMatch && convenioMatch && alergiasMatch && observacoesMatch && sexoMatch
     })
 
     return (
         <div className="bg-white dark:bg-gray-800 shadow rounded-2xl p-6 mt-8">
             <h2 className="text-xl font-semibold text-cyan-800 dark:text-cyan-300 mb-4">
-                Informações Rápidas de Pacientes
+                Informacoes rapidas de pacientes
             </h2>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4">
                 <input
                     type="text"
-                    name="name"
-                    value={filters.name}
+                    name="nome"
+                    value={filters.nome}
                     onChange={handleFilterChange}
                     placeholder="Filtrar por nome"
                     className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-600 outline-none"
@@ -133,8 +137,8 @@ const PatientsList = () => {
 
                 <input
                     type="text"
-                    name="phone"
-                    value={filters.phone}
+                    name="telefone"
+                    value={filters.telefone}
                     onChange={handleFilterChange}
                     placeholder="Filtrar por telefone"
                     className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-600 outline-none"
@@ -142,19 +146,37 @@ const PatientsList = () => {
 
                 <input
                     type="text"
-                    name="healthInsurance"
-                    value={filters.healthInsurance}
+                    name="sexo"
+                    value={filters.sexo}
                     onChange={handleFilterChange}
-                    placeholder="Filtrar por convênio"
+                    placeholder="Filtrar por sexo"
                     className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-600 outline-none"
                 />
 
                 <input
                     type="text"
-                    name="allergies"
-                    value={filters.allergies}
+                    name="convenio"
+                    value={filters.convenio}
+                    onChange={handleFilterChange}
+                    placeholder="Filtrar por convenio"
+                    className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-600 outline-none"
+                />
+
+                <input
+                    type="text"
+                    name="alergias"
+                    value={filters.alergias}
                     onChange={handleFilterChange}
                     placeholder="Filtrar por alergias"
+                    className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-600 outline-none"
+                />
+
+                <input
+                    type="text"
+                    name="observacoes"
+                    value={filters.observacoes}
+                    onChange={handleFilterChange}
+                    placeholder="Filtrar por anotacoes"
                     className="border rounded-lg px-3 py-2 focus:ring-2 focus:ring-cyan-600 outline-none"
                 />
 
@@ -181,13 +203,13 @@ const PatientsList = () => {
 
                                 <div>
                                     <p className="font-semibold text-gray-800 dark:text-gray-100">
-                                        {patient.fullName}
+                                        {patient.nome}
                                     </p>
                                     <p className="text-sm text-gray-600 dark:text-gray-300">
                                         {patient.email}
                                     </p>
                                     <p className="text-sm text-gray-600 dark:text-gray-300">
-                                        {patient.phone}
+                                        {patient.telefone}
                                     </p>
                                 </div>
                             </div>
@@ -198,12 +220,24 @@ const PatientsList = () => {
                                     {ages[patient.id] || "-"} anos
                                 </p>
                                 <p>
-                                    <strong>Plano:</strong>{" "}
-                                    {patient.healthInsurance || "-"}
+                                    <strong>Sexo:</strong>{" "}
+                                    {patient.sexo || "-"}
+                                </p>
+                                <p>
+                                    <strong>Convenio:</strong>{" "}
+                                    {patient.convenio || "-"}
                                 </p>
                                 <p>
                                     <strong>Alergias:</strong>{" "}
-                                    {patient.allergies || "-"}
+                                    {patient.alergias || "-"}
+                                </p>
+                                <p>
+                                    <strong>Anotacoes:</strong>{" "}
+                                    {patient.observacoes || "-"}
+                                </p>
+                                <p>
+                                    <strong>Responsavel:</strong>{" "}
+                                    {patient.responsavel || "-"}
                                 </p>
 
                                 <Link

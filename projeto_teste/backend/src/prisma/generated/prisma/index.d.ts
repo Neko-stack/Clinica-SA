@@ -7054,6 +7054,9 @@ export namespace Prisma {
     email: string | null
     data_nascimento: Date | null
     sexo: string | null
+    convenio: string | null
+    alergias: string | null
+    observacoes: string | null
     responsavel: string | null
   }
 
@@ -7065,6 +7068,9 @@ export namespace Prisma {
     email: string | null
     data_nascimento: Date | null
     sexo: string | null
+    convenio: string | null
+    alergias: string | null
+    observacoes: string | null
     responsavel: string | null
   }
 
@@ -7076,6 +7082,9 @@ export namespace Prisma {
     email: number
     data_nascimento: number
     sexo: number
+    convenio: number
+    alergias: number
+    observacoes: number
     responsavel: number
     _all: number
   }
@@ -7097,6 +7106,9 @@ export namespace Prisma {
     email?: true
     data_nascimento?: true
     sexo?: true
+    convenio?: true
+    alergias?: true
+    observacoes?: true
     responsavel?: true
   }
 
@@ -7108,6 +7120,9 @@ export namespace Prisma {
     email?: true
     data_nascimento?: true
     sexo?: true
+    convenio?: true
+    alergias?: true
+    observacoes?: true
     responsavel?: true
   }
 
@@ -7119,6 +7134,9 @@ export namespace Prisma {
     email?: true
     data_nascimento?: true
     sexo?: true
+    convenio?: true
+    alergias?: true
+    observacoes?: true
     responsavel?: true
     _all?: true
   }
@@ -7217,6 +7235,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date
     sexo: string
+    convenio: string | null
+    alergias: string | null
+    observacoes: string | null
     responsavel: string | null
     _count: PacienteCountAggregateOutputType | null
     _avg: PacienteAvgAggregateOutputType | null
@@ -7247,6 +7268,9 @@ export namespace Prisma {
     email?: boolean
     data_nascimento?: boolean
     sexo?: boolean
+    convenio?: boolean
+    alergias?: boolean
+    observacoes?: boolean
     responsavel?: boolean
     Prontuario?: boolean | Paciente$ProntuarioArgs<ExtArgs>
     Consulta?: boolean | Paciente$ConsultaArgs<ExtArgs>
@@ -7262,6 +7286,9 @@ export namespace Prisma {
     email?: boolean
     data_nascimento?: boolean
     sexo?: boolean
+    convenio?: boolean
+    alergias?: boolean
+    observacoes?: boolean
     responsavel?: boolean
   }, ExtArgs["result"]["paciente"]>
 
@@ -7273,6 +7300,9 @@ export namespace Prisma {
     email?: boolean
     data_nascimento?: boolean
     sexo?: boolean
+    convenio?: boolean
+    alergias?: boolean
+    observacoes?: boolean
     responsavel?: boolean
   }, ExtArgs["result"]["paciente"]>
 
@@ -7284,10 +7314,13 @@ export namespace Prisma {
     email?: boolean
     data_nascimento?: boolean
     sexo?: boolean
+    convenio?: boolean
+    alergias?: boolean
+    observacoes?: boolean
     responsavel?: boolean
   }
 
-  export type PacienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "cpf" | "telefone" | "email" | "data_nascimento" | "sexo" | "responsavel", ExtArgs["result"]["paciente"]>
+  export type PacienteOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nome" | "cpf" | "telefone" | "email" | "data_nascimento" | "sexo" | "convenio" | "alergias" | "observacoes" | "responsavel", ExtArgs["result"]["paciente"]>
   export type PacienteInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     Prontuario?: boolean | Paciente$ProntuarioArgs<ExtArgs>
     Consulta?: boolean | Paciente$ConsultaArgs<ExtArgs>
@@ -7312,6 +7345,9 @@ export namespace Prisma {
       email: string
       data_nascimento: Date
       sexo: string
+      convenio: string | null
+      alergias: string | null
+      observacoes: string | null
       responsavel: string | null
     }, ExtArgs["result"]["paciente"]>
     composites: {}
@@ -7746,6 +7782,9 @@ export namespace Prisma {
     readonly email: FieldRef<"Paciente", 'String'>
     readonly data_nascimento: FieldRef<"Paciente", 'DateTime'>
     readonly sexo: FieldRef<"Paciente", 'String'>
+    readonly convenio: FieldRef<"Paciente", 'String'>
+    readonly alergias: FieldRef<"Paciente", 'String'>
+    readonly observacoes: FieldRef<"Paciente", 'String'>
     readonly responsavel: FieldRef<"Paciente", 'String'>
   }
     
@@ -8306,6 +8345,9 @@ export namespace Prisma {
     email: 'email',
     data_nascimento: 'data_nascimento',
     sexo: 'sexo',
+    convenio: 'convenio',
+    alergias: 'alergias',
+    observacoes: 'observacoes',
     responsavel: 'responsavel'
   };
 
@@ -8771,6 +8813,9 @@ export namespace Prisma {
     email?: StringFilter<"Paciente"> | string
     data_nascimento?: DateTimeFilter<"Paciente"> | Date | string
     sexo?: StringFilter<"Paciente"> | string
+    convenio?: StringNullableFilter<"Paciente"> | string | null
+    alergias?: StringNullableFilter<"Paciente"> | string | null
+    observacoes?: StringNullableFilter<"Paciente"> | string | null
     responsavel?: StringNullableFilter<"Paciente"> | string | null
     Prontuario?: ProntuarioListRelationFilter
     Consulta?: ConsultaListRelationFilter
@@ -8785,6 +8830,9 @@ export namespace Prisma {
     email?: SortOrder
     data_nascimento?: SortOrder
     sexo?: SortOrder
+    convenio?: SortOrderInput | SortOrder
+    alergias?: SortOrderInput | SortOrder
+    observacoes?: SortOrderInput | SortOrder
     responsavel?: SortOrderInput | SortOrder
     Prontuario?: ProntuarioOrderByRelationAggregateInput
     Consulta?: ConsultaOrderByRelationAggregateInput
@@ -8802,6 +8850,9 @@ export namespace Prisma {
     email?: StringFilter<"Paciente"> | string
     data_nascimento?: DateTimeFilter<"Paciente"> | Date | string
     sexo?: StringFilter<"Paciente"> | string
+    convenio?: StringNullableFilter<"Paciente"> | string | null
+    alergias?: StringNullableFilter<"Paciente"> | string | null
+    observacoes?: StringNullableFilter<"Paciente"> | string | null
     responsavel?: StringNullableFilter<"Paciente"> | string | null
     Prontuario?: ProntuarioListRelationFilter
     Consulta?: ConsultaListRelationFilter
@@ -8816,6 +8867,9 @@ export namespace Prisma {
     email?: SortOrder
     data_nascimento?: SortOrder
     sexo?: SortOrder
+    convenio?: SortOrderInput | SortOrder
+    alergias?: SortOrderInput | SortOrder
+    observacoes?: SortOrderInput | SortOrder
     responsavel?: SortOrderInput | SortOrder
     _count?: PacienteCountOrderByAggregateInput
     _avg?: PacienteAvgOrderByAggregateInput
@@ -8835,6 +8889,9 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"Paciente"> | string
     data_nascimento?: DateTimeWithAggregatesFilter<"Paciente"> | Date | string
     sexo?: StringWithAggregatesFilter<"Paciente"> | string
+    convenio?: StringNullableWithAggregatesFilter<"Paciente"> | string | null
+    alergias?: StringNullableWithAggregatesFilter<"Paciente"> | string | null
+    observacoes?: StringNullableWithAggregatesFilter<"Paciente"> | string | null
     responsavel?: StringNullableWithAggregatesFilter<"Paciente"> | string | null
   }
 
@@ -9141,6 +9198,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Prontuario?: ProntuarioCreateNestedManyWithoutPacienteInput
     Consulta?: ConsultaCreateNestedManyWithoutPacienteInput
@@ -9155,6 +9215,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Prontuario?: ProntuarioUncheckedCreateNestedManyWithoutPacienteInput
     Consulta?: ConsultaUncheckedCreateNestedManyWithoutPacienteInput
@@ -9168,6 +9231,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Prontuario?: ProntuarioUpdateManyWithoutPacienteNestedInput
     Consulta?: ConsultaUpdateManyWithoutPacienteNestedInput
@@ -9182,6 +9248,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Prontuario?: ProntuarioUncheckedUpdateManyWithoutPacienteNestedInput
     Consulta?: ConsultaUncheckedUpdateManyWithoutPacienteNestedInput
@@ -9196,6 +9265,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
   }
 
@@ -9206,6 +9278,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -9217,6 +9292,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -9686,6 +9764,9 @@ export namespace Prisma {
     email?: SortOrder
     data_nascimento?: SortOrder
     sexo?: SortOrder
+    convenio?: SortOrder
+    alergias?: SortOrder
+    observacoes?: SortOrder
     responsavel?: SortOrder
   }
 
@@ -9701,6 +9782,9 @@ export namespace Prisma {
     email?: SortOrder
     data_nascimento?: SortOrder
     sexo?: SortOrder
+    convenio?: SortOrder
+    alergias?: SortOrder
+    observacoes?: SortOrder
     responsavel?: SortOrder
   }
 
@@ -9712,6 +9796,9 @@ export namespace Prisma {
     email?: SortOrder
     data_nascimento?: SortOrder
     sexo?: SortOrder
+    convenio?: SortOrder
+    alergias?: SortOrder
+    observacoes?: SortOrder
     responsavel?: SortOrder
   }
 
@@ -10388,6 +10475,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Prontuario?: ProntuarioCreateNestedManyWithoutPacienteInput
     Consulta?: ConsultaCreateNestedManyWithoutPacienteInput
@@ -10401,6 +10491,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Prontuario?: ProntuarioUncheckedCreateNestedManyWithoutPacienteInput
     Consulta?: ConsultaUncheckedCreateNestedManyWithoutPacienteInput
@@ -10429,6 +10522,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Prontuario?: ProntuarioUpdateManyWithoutPacienteNestedInput
     Consulta?: ConsultaUpdateManyWithoutPacienteNestedInput
@@ -10442,6 +10538,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Prontuario?: ProntuarioUncheckedUpdateManyWithoutPacienteNestedInput
     Consulta?: ConsultaUncheckedUpdateManyWithoutPacienteNestedInput
@@ -10504,6 +10603,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Consulta?: ConsultaCreateNestedManyWithoutPacienteInput
     Exame?: ExameCreateNestedManyWithoutPacienteInput
@@ -10517,6 +10619,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Consulta?: ConsultaUncheckedCreateNestedManyWithoutPacienteInput
     Exame?: ExameUncheckedCreateNestedManyWithoutPacienteInput
@@ -10567,6 +10672,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Consulta?: ConsultaUpdateManyWithoutPacienteNestedInput
     Exame?: ExameUpdateManyWithoutPacienteNestedInput
@@ -10580,6 +10688,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Consulta?: ConsultaUncheckedUpdateManyWithoutPacienteNestedInput
     Exame?: ExameUncheckedUpdateManyWithoutPacienteNestedInput
@@ -10620,6 +10731,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Prontuario?: ProntuarioCreateNestedManyWithoutPacienteInput
     Exame?: ExameCreateNestedManyWithoutPacienteInput
@@ -10633,6 +10747,9 @@ export namespace Prisma {
     email: string
     data_nascimento: Date | string
     sexo: string
+    convenio?: string | null
+    alergias?: string | null
+    observacoes?: string | null
     responsavel?: string | null
     Prontuario?: ProntuarioUncheckedCreateNestedManyWithoutPacienteInput
     Exame?: ExameUncheckedCreateNestedManyWithoutPacienteInput
@@ -10661,6 +10778,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Prontuario?: ProntuarioUpdateManyWithoutPacienteNestedInput
     Exame?: ExameUpdateManyWithoutPacienteNestedInput
@@ -10674,6 +10794,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     data_nascimento?: DateTimeFieldUpdateOperationsInput | Date | string
     sexo?: StringFieldUpdateOperationsInput | string
+    convenio?: NullableStringFieldUpdateOperationsInput | string | null
+    alergias?: NullableStringFieldUpdateOperationsInput | string | null
+    observacoes?: NullableStringFieldUpdateOperationsInput | string | null
     responsavel?: NullableStringFieldUpdateOperationsInput | string | null
     Prontuario?: ProntuarioUncheckedUpdateManyWithoutPacienteNestedInput
     Exame?: ExameUncheckedUpdateManyWithoutPacienteNestedInput

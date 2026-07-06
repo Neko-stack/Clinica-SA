@@ -1,116 +1,110 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-
-import Modal from "../Modal";
+import React, { useState, useEffect } from "react"
+import { toast, ToastContainer } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
+import apiClient from "../../api/api"
+import Modal from "../Modal"
 
 const ExamsForm = () => {
-    const [patients, setPatients] = useState([]);
-    const [filteredPatients, setFilteredPatients] = useState([]);
-    const [selectedPatient, setSelectedPatient] = useState(null);
+    const [patients, setPatients] = useState([])
+    const [filteredPatients, setFilteredPatients] = useState([])
+    const [selectedPatient, setSelectedPatient] = useState(null)
     const [examData, setExamData] = useState({
-        name: "",
-        date: "",
-        time: "",
-        type: "",
-        laboratory: "",
-        documentUrl: "",
-        results: "",
-    });
-    const [isSaving, setIsSaving] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+        tipo_exame: "",
+        valor: "",
+        descricao: "",
+        resultado: "",
+        data_exame: "",
+    })
+    const [isSaving, setIsSaving] = useState(false)
+    const [isModalOpen, setIsModalOpen] = useState(false)
 
-    // Buscar pacientes ao carregar o componente
-    // useEffect(() => {
-    //     fetchPatients();
-    // }, []);
+    useEffect(() => {
+        const fetchPatients = async () => {
+            try {
+                const response = await apiClient.get("/pacientes")
+                setPatients(response.data || [])
+                setFilteredPatients(response.data || [])
+            } catch (error) {
+                console.error("Erro ao obter dados dos pacientes:", error)
+            }
+        }
 
-    // const fetchPatients = async () => {
-    //     try {
-    //         const response = await axios.get("http://localhost:3000/patients");
-    //         setPatients(response.data);
-    //         setFilteredPatients(response.data);
-    //     } catch (error) {
-    //         console.error("Erro ao obter dados dos pacientes:", error);
-    //     }
-    // };
+        fetchPatients()
+    }, [])
 
     const handleSearchChange = (event) => {
-        const searchTerm = event.target.value.toLowerCase();
+        const searchTerm = event.target.value.toLowerCase()
         const filtered = patients.filter(
             (patient) =>
-                patient.fullName.toLowerCase().includes(searchTerm) ||
+                patient.nome?.toLowerCase().includes(searchTerm) ||
                 patient.id.toString().includes(searchTerm)
-        );
-        setFilteredPatients(filtered);
-    };
+        )
+        setFilteredPatients(filtered)
+    }
 
     const handleSelectModal = (patient) => {
-        setSelectedPatient(patient);
-        setIsModalOpen(true);
-    };
+        setSelectedPatient(patient)
+        setIsModalOpen(true)
+    }
 
     const handleCloseModal = () => {
-        setSelectedPatient(null);
-        setIsModalOpen(false);
-    };
+        setSelectedPatient(null)
+        setIsModalOpen(false)
+    }
 
     const handleInputChange = (event) => {
-        const { name, value } = event.target;
+        const { name, value } = event.target
         setExamData((prevData) => ({
             ...prevData,
             [name]: value,
-        }));
-    };
+        }))
+    }
 
     const resetForm = () => {
         setExamData({
-            name: "",
-            date: "",
-            time: "",
-            type: "",
-            laboratory: "",
-            documentUrl: "",
-            results: "",
-        });
-    };
+            tipo_exame: "",
+            valor: "",
+            descricao: "",
+            resultado: "",
+            data_exame: "",
+        })
+    }
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        if (!selectedPatient) return;
+        event.preventDefault()
+        if (!selectedPatient) return
 
         try {
-            setIsSaving(true);
-            const examToAdd = {
-                ...examData,
-                patientId: selectedPatient.id,
-            };
+            setIsSaving(true)
 
-            await axios.post("http://localhost:3000/exames", examToAdd);
+            await apiClient.post("/exames", {
+                ...examData,
+                valor: Number(examData.valor),
+                paciente_id: selectedPatient.id,
+            })
+
             toast.success("Exame cadastrado com sucesso!", {
                 position: "top-right",
                 autoClose: 2000,
                 hideProgressBar: true,
-            });
+            })
 
-            resetForm();
-            handleCloseModal();
+            resetForm()
+            handleCloseModal()
         } catch (error) {
             toast.error("Erro ao cadastrar o exame!", {
                 position: "top-right",
                 autoClose: 2000,
                 hideProgressBar: true,
-            });
-            console.error("Erro ao cadastrar exame:", error);
+            })
+            console.error("Erro ao cadastrar exame:", error)
         } finally {
-            setIsSaving(false);
+            setIsSaving(false)
         }
-    };
+    }
 
     return (
         <section className="p-6 text-gray-800">
-            {/* Campo de busca */}
             <div className="mb-6">
                 <label className="block text-sm font-semibold mb-2">
                     Buscar paciente para cadastrar exame
@@ -123,7 +117,6 @@ const ExamsForm = () => {
                 />
             </div>
 
-            {/* Lista de pacientes */}
             <ul className="space-y-3">
                 {filteredPatients.map((patient) => (
                     <li
@@ -135,10 +128,10 @@ const ExamsForm = () => {
                                 <strong>Registro:</strong> {patient.id}
                             </p>
                             <p className="text-sm">
-                                <strong>Nome:</strong> {patient.fullName}
+                                <strong>Nome:</strong> {patient.nome}
                             </p>
                             <p className="text-sm">
-                                <strong>Convênio:</strong> {patient.healthInsurance}
+                                <strong>Telefone:</strong> {patient.telefone || "-"}
                             </p>
                         </div>
                         <button
@@ -151,12 +144,11 @@ const ExamsForm = () => {
                 ))}
             </ul>
 
-            {/* Modal de cadastro de exame */}
             <Modal isOpen={isModalOpen} onClose={handleCloseModal}>
                 {selectedPatient && (
                     <>
                         <h2 className="text-lg font-bold mb-4 text-cyan-700">
-                            Cadastrar Exame para {selectedPatient.fullName}
+                            Cadastrar exame para {selectedPatient.nome}
                         </h2>
 
                         <div className="mb-4 text-sm text-gray-700">
@@ -164,114 +156,79 @@ const ExamsForm = () => {
                                 <strong>Email:</strong> {selectedPatient.email}
                             </p>
                             <p>
-                                <strong>Telefone:</strong> {selectedPatient.phone}
+                                <strong>Telefone:</strong> {selectedPatient.telefone}
                             </p>
                         </div>
 
                         <form onSubmit={handleSubmit} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium mb-1">
-                                    Nome do Exame
+                                    Tipo do exame
                                 </label>
                                 <input
                                     type="text"
-                                    name="name"
-                                    value={examData.name}
+                                    name="tipo_exame"
+                                    value={examData.tipo_exame}
                                     onChange={handleInputChange}
                                     required
-                                    minLength={5}
-                                    maxLength={50}
                                     className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
                                 />
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                        Data do Exame
-                                    </label>
-                                    <input
-                                        type="date"
-                                        name="date"
-                                        value={examData.date}
-                                        onChange={handleInputChange}
-                                        required
-                                        className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
-                                    />
-                                </div>
-                                <div>
-                                    <label className="block text-sm font-medium mb-1">
-                                        Horário
-                                    </label>
-                                    <input
-                                        type="time"
-                                        name="time"
-                                        value={examData.time}
-                                        onChange={handleInputChange}
-                                        required
-                                        className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
-                                    />
-                                </div>
-                            </div>
-
                             <div>
                                 <label className="block text-sm font-medium mb-1">
-                                    Tipo do Exame
+                                    Valor
                                 </label>
                                 <input
-                                    type="text"
-                                    name="type"
-                                    value={examData.type}
+                                    type="number"
+                                    name="valor"
+                                    value={examData.valor}
                                     onChange={handleInputChange}
                                     required
-                                    minLength={5}
-                                    maxLength={30}
+                                    min="0"
+                                    step="0.01"
                                     className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium mb-1">
-                                    Laboratório
+                                    Data do exame
                                 </label>
                                 <input
-                                    type="text"
-                                    name="laboratory"
-                                    value={examData.laboratory}
+                                    type="datetime-local"
+                                    name="data_exame"
+                                    value={examData.data_exame}
                                     onChange={handleInputChange}
                                     required
-                                    minLength={5}
-                                    maxLength={30}
                                     className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
                                 />
                             </div>
 
                             <div>
                                 <label className="block text-sm font-medium mb-1">
-                                    URL do Documento
-                                </label>
-                                <input
-                                    type="text"
-                                    name="documentUrl"
-                                    value={examData.documentUrl}
-                                    onChange={handleInputChange}
-                                    placeholder="Ex: https://drive.google.com/..."
-                                    className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Resultados do Exame
+                                    Descricao
                                 </label>
                                 <textarea
-                                    name="results"
-                                    value={examData.results}
+                                    name="descricao"
+                                    value={examData.descricao}
                                     onChange={handleInputChange}
                                     rows="3"
                                     required
-                                    minLength={15}
-                                    maxLength={1000}
+                                    className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-medium mb-1">
+                                    Resultado
+                                </label>
+                                <textarea
+                                    name="resultado"
+                                    value={examData.resultado}
+                                    onChange={handleInputChange}
+                                    rows="3"
+                                    required
                                     className="w-full border p-2 rounded-lg focus:ring-2 focus:ring-cyan-600 outline-none"
                                 />
                             </div>
@@ -299,7 +256,7 @@ const ExamsForm = () => {
 
             <ToastContainer />
         </section>
-    );
-};
+    )
+}
 
-export default ExamsForm;
+export default ExamsForm

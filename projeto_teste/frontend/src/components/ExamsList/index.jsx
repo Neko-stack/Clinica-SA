@@ -20,7 +20,7 @@ const ExamsList = () => {
                 if (response.data) {
                     setExams(response.data.exames)
                     setTotal(response.data.total)
-                    setTotalPage(response.data.totalPages)
+                    setTotalPage(response.data.totalPaginas)
                 }
             } catch (error) {
                 console.error("Erro ao listar exames", error)
@@ -31,8 +31,8 @@ const ExamsList = () => {
     }, [page])
 
     const sortedExams = [...(exams || [])].sort((a, b) => {
-        const dateA = new Date(a.data_exame || a.date)
-        const dateB = new Date(b.data_exame || b.date)
+        const dateA = new Date(a.data_exame)
+        const dateB = new Date(b.data_exame)
 
         if (sortOrder === "recent") {
             return dateB - dateA
@@ -77,19 +77,19 @@ const ExamsList = () => {
                                 <tr key={exame.id} className="border-b">
                                     <td className="p-2">{exame.id}</td>
                                     <td className="p-2">
-                                        {exame.tipo_exame || exame.type}
+                                        {exame.tipo_exame}
                                     </td>
                                     <td className="p-2">
-                                        {exame.descricao || exame.name}
+                                        {exame.descricao}
                                     </td>
                                     <td className="p-2">
-                                        {exame.data_exame || exame.date}
+                                        {exame.data_exame}
                                     </td>
                                     <td className="p-2">
                                         {exame.valor || "-"}
                                     </td>
                                     <td className="p-2">
-                                        <em>{exame.resultado || exame.results}</em>
+                                        <em>{exame.resultado}</em>
                                     </td>
                                 </tr>
                             ))}

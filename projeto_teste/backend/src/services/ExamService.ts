@@ -1,4 +1,4 @@
-import type { Exame, } from "../prisma/generated/prisma/client";
+import type { Exame, } from "../prisma/generated/prisma";
 import { examRepository, type ExamRepository } from "../repositories/ExamRepository";
 
 export class ExamService {
@@ -17,7 +17,8 @@ export class ExamService {
             valor: dadosExame.valor,
             descricao: dadosExame.descricao,
             data_exame: new Date(dadosExame.data_exame),
-            resultado: dadosExame.resultado
+            resultado: dadosExame.resultado,
+            paciente_id: dadosExame.paciente_id
         })
         return exameCriado
     }

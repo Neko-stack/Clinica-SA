@@ -1,154 +1,62 @@
 {
-  "users": [
+  "usuarios": [
     {
       "id": "1",
       "email": "joao@email.com",
-      "password": "abcd1234"
+      "senha": "abcd1234"
     },
     {
       "id": "2",
       "email": "luciano@gmail.com",
-      "password": "abcd1234"
-    },
-    {
-      "email": "luciano2@gmail.com",
-      "password": "abcd1234",
-      "id": "AcVR7AkgHGw"
-    },
-    {
-      "email": "luciano3@gmail.com",
-      "password": "asdf1234",
-      "id": "GBMuy9BRnQc"
+      "senha": "abcd1234"
     }
   ],
-  "patients": [
+  "pacientes": [
     {
       "id": "1",
-      "fullName": "João da Silva",
-      "gender": "Masculino",
-      "birthdate": "11/12/1980",
+      "nome": "Joao da Silva",
       "cpf": "958.858.858-88",
-      "rg": "958.858.858-88",
-      "maritalStatus": "solteiro",
-      "phone": "(48)85544-5955",
+      "telefone": "(48) 98584-9652",
       "email": "joao@email.com",
-      "birthplace": "Florianópolis",
-      "emergencyContact": "(48)85544-5955",
-      "allergies": "A,B",
-      "specialCare": "cuidado A",
-      "healthInsurance": "unimed",
-      "insuranceNumber": "22121",
-      "insuranceValidity": "15/01/2027",
-      "address": {
-        "cep": "88000-000",
-        "city": "Florianópolis",
-        "state": "SC",
-        "street": "Rua X",
-        "number": "30",
-        "complement": "casa",
-        "neighborhood": "centro",
-        "reference": "muro branco"
-      }
+      "data_nascimento": "1980-12-11",
+      "sexo": "masculino",
+      "convenio": "Unimed",
+      "alergias": "Dipirona",
+      "observacoes": "Paciente prefere contato por telefone.",
+      "responsavel": null
     },
     {
       "id": "2",
-      "fullName": "Maria da Silva",
-      "gender": "Feminino",
-      "birthdate": "11/12/1980",
+      "nome": "Maria da Silva",
       "cpf": "958.858.858-88",
-      "rg": "958.858.858-88",
-      "maritalStatus": "solteiro",
-      "phone": "(48)98584-9652",
+      "telefone": "(48) 98584-9652",
       "email": "maria@email.com",
-      "birthplace": "Florianópolis",
-      "emergencyContact": "(48)85544-5955",
-      "allergies": "A,B",
-      "specialCare": "cuidado A",
-      "healthInsurance": "unimed",
-      "insuranceNumber": "22121",
-      "insuranceValidity": "15/01/2027",
-      "address": {
-        "cep": "88000-000",
-        "city": "Florianópolis",
-        "state": "SC",
-        "street": "Rua X",
-        "number": "30",
-        "complement": "casa",
-        "neighborhood": "centro",
-        "reference": "muro branco"
-      }
-    },
-    {
-      "fullName": "João",
-      "gender": "masculino",
-      "birthdate": "1980-11-10",
-      "cpf": "959.555.554-52",
-      "rg": "1151151555",
-      "maritalStatus": "solteiro(a)",
-      "phone": "(48) 99595-9595",
-      "email": "joao@gmail.com",
-      "birthplace": "brasileiro",
-      "emergencyContact": "(48) 99595-5955",
-      "allergies": "fsjkafk",
-      "specialCare": "dakldfjla",
-      "healthInsurance": "unimed",
-      "insuranceNumber": "12345",
-      "insuranceValidity": "2026-06-19",
-      "address": {
-        "cep": "88054-633",
-        "city": "Florianópolis",
-        "state": "SC",
-        "street": "Servidão Manoel Monteiro",
-        "number": "",
-        "complement": "",
-        "neighborhood": "Canasvieiras",
-        "reference": ""
-      },
-      "id": "6f75s8MTF7g"
+      "data_nascimento": "1980-12-11",
+      "sexo": "feminino",
+      "convenio": "Particular",
+      "alergias": "Nenhuma",
+      "observacoes": "Sem observacoes adicionais.",
+      "responsavel": null
     }
   ],
-  "consults": [
+  "consultas": [
     {
-      "patientId": "2",
-      "reason": "Resfriado",
-      "date": "20-03-2026",
-      "time": "15:30",
-      "description": "Lorem Ipsum",
-      "medication": "Lorem Ipsum",
-      "dosagePrecautions": "Lorem Ipsum",
-      "id": "1"
-    },
-    {
-      "patientId": "2",
-      "reason": "Gripe",
-      "date": "2026-06-12",
-      "time": "23:50",
-      "description": "gripado",
-      "medication": "analgésico",
-      "dosagePrecautions": "fdadfa",
-      "id": "fMHJHEbuswE"
-    },
-    {
-      "patientId": "6f75s8MTF7g",
-      "reason": "Febre",
-      "date": "2026-06-11",
-      "time": "23:51",
-      "description": "fsfdafdasfd",
-      "medication": "fdasdfaf",
-      "dosagePrecautions": "dfadfa",
-      "id": "chjP4gj8fDQ"
+      "id": "1",
+      "motivo": "Resfriado",
+      "data_consulta": "2026-03-20T15:30",
+      "observacoes": "Paciente com sintomas gripais.",
+      "medico_responsavel_id": 1,
+      "paciente_id": 2
     }
   ],
-  "exams": [
+  "exames": [
     {
-      "name": "Lorem",
-      "date": "12-07-2025",
-      "time": "15:20",
-      "type": "Lorem",
-      "laboratory": "Lorem",
-      "documentUrl": "https://docexemplo.com",
-      "results": "Lorem",
-      "id": "1"
+      "id": "1",
+      "tipo_exame": "Hemograma",
+      "valor": 80,
+      "descricao": "Exame laboratorial de sangue.",
+      "resultado": "Resultado dentro dos parametros esperados.",
+      "data_exame": "2026-07-12T15:20"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

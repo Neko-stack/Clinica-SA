@@ -1,4 +1,4 @@
-import type { Paciente } from "../prisma/generated/prisma/";
+import type { Paciente } from "../prisma/generated/prisma";
 import {
     pacienteRepository,
     PacienteRepository

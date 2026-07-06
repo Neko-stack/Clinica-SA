@@ -1,45 +1,44 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router";
-import axios from "axios";
+import React, { useState, useEffect } from "react"
+import { Link } from "react-router"
+import apiClient from "../../api/api"
 
 const MedicalRecordList = () => {
-  const [patients, setPatients] = useState([]);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [patients, setPatients] = useState([])
+  const [searchTerm, setSearchTerm] = useState("")
 
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/patients");
-        setPatients(response.data);
+        const response = await apiClient.get("/pacientes")
+        setPatients(response.data || [])
       } catch (error) {
-        console.error("Erro ao obter dados dos pacientes:", error);
+        console.error("Erro ao obter dados dos pacientes:", error)
       }
-    };
+    }
 
-    fetchPatients();
-  }, []);
+    fetchPatients()
+  }, [])
 
   const handleSearchChange = (event) => {
-    setSearchTerm(event.target.value);
-  };
+    setSearchTerm(event.target.value)
+  }
 
   const filteredPatients = patients.filter((patient) => {
     return (
-      patient.fullName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      patient.nome?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       patient.id.toString().includes(searchTerm)
-    );
-  });
+    )
+  })
 
   return (
     <section className="p-6 bg-gray-50 rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-6 text-gray-800">
-        Listagem de Prontuários
+        Listagem de prontuarios
       </h2>
 
-      {/* Campo de busca */}
       <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
         <label htmlFor="search" className="text-gray-700 font-medium">
-          Buscar Paciente:
+          Buscar paciente:
         </label>
         <input
           type="text"
@@ -51,7 +50,6 @@ const MedicalRecordList = () => {
         />
       </div>
 
-      {/* Lista de pacientes */}
       <ul className="space-y-4">
         {filteredPatients.length > 0 ? (
           filteredPatients.map((patient) => (
@@ -63,10 +61,13 @@ const MedicalRecordList = () => {
                 <strong className="text-gray-700">Registro:</strong> {patient.id}
               </p>
               <p className="text-gray-700">
-                <strong>Nome:</strong> {patient.fullName}
+                <strong>Nome:</strong> {patient.nome}
               </p>
               <p className="text-gray-700">
-                <strong>Convênio:</strong> {patient.healthInsurance}
+                <strong>Telefone:</strong> {patient.telefone || "-"}
+              </p>
+              <p className="text-gray-700">
+                <strong>Convenio:</strong> {patient.convenio || "-"}
               </p>
               <Link
                 to={`/paciente/${patient.id}`}
@@ -81,7 +82,7 @@ const MedicalRecordList = () => {
         )}
       </ul>
     </section>
-  );
-};
+  )
+}
 
-export default MedicalRecordList;
+export default MedicalRecordList

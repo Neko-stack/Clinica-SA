@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { Exame, Usuario } from "../prisma/generated/prisma/client"
+import type { Exame } from "../prisma/generated/prisma"
 import { examService, ExamService } from "../services/ExamService";
 
 

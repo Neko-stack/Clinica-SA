@@ -1,4 +1,4 @@
-import type { Exame, PrismaClient, Token, } from "../prisma/generated/prisma/client";
+import type { Exame, PrismaClient } from "../prisma/generated/prisma";
 import { prisma } from "../prisma/prisma";
 
 export class ExamRepository {
@@ -40,7 +40,8 @@ export class ExamRepository {
                 valor: dadosExame.valor || "",
                 descricao: dadosExame.descricao || "",
                 data_exame: new Date(dadosExame.data_exame || ""),
-                resultado: dadosExame.resultado || ""
+                resultado: dadosExame.resultado || "",
+                paciente_id: dadosExame.paciente_id || 0
             }
         })
     }
@@ -60,12 +61,12 @@ export class ExamRepository {
     }
 
     async deletarExame(idExame: number) {
-        const usuario = await prisma.usuario.delete({
+        const exame = await prisma.exame.delete({
             where: {
                 id: idExame
             }
         })
-        return usuario;
+        return exame;
     }
 }
 

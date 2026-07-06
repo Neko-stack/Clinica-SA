@@ -172,6 +172,9 @@ exports.Prisma.PacienteScalarFieldEnum = {
   email: 'email',
   data_nascimento: 'data_nascimento',
   sexo: 'sexo',
+  convenio: 'convenio',
+  alergias: 'alergias',
+  observacoes: 'observacoes',
   responsavel: 'responsavel'
 };
 

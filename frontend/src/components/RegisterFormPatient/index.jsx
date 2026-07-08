@@ -46,10 +46,7 @@ function RegisterFormPatient() {
         try {
             await apiClient.post("/pacientes", {
                 ...formData,
-                convenio: formData.convenio || null,
-                alergias: formData.alergias || null,
-                observacoes: formData.observacoes || null,
-                responsavel: formData.responsavel || null,
+            
             })
 
             toast.success("Paciente cadastrado com sucesso!", {

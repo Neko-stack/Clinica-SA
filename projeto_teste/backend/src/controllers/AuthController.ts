@@ -1,6 +1,6 @@
 import type { Request, Response } from "express";
-import type { Usuario } from "../prisma/generated/prisma"
-import { AuthService, authService } from "../services/AuthService";
+import type { Usuario } from "../prisma/generated/prisma/client"
+import { AuthService, authService } from "../services/authService";
 
 class AuthController {
     constructor(private readonly service: AuthService) {
@@ -38,6 +38,44 @@ class AuthController {
             })
         }
     }
+
+    async resetPassword(req: Request, res: Response) {
+
+        try {
+
+            const { email, senha } = req.body
+
+            if (!email || !senha) {
+                return res.status(400).json({
+                    mensagem: "E-mail e senha são obrigatórios."
+                })
+            }
+
+            await this.service.resetPassword(email, senha)
+
+            return res.status(200).json({
+                mensagem: "Senha alterada com sucesso!"
+            })
+
+        } catch (error) {
+
+            console.log(error)
+
+            if (
+                error instanceof Error &&
+                error.message === "Usuário não encontrado."
+            ) {
+                return res.status(404).json({
+                    mensagem: error.message
+                })
+            }
+
+            return res.status(500).json({
+                mensagem: "Erro ao alterar senha."
+            })
+
+        }
+
+    }
 }
 export const authController = new AuthController(authService)
-

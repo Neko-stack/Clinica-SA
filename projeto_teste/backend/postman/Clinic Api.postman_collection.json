@@ -15,18 +15,7 @@
           "name": "Listar usuarios",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/usuarios",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "usuarios"
-              ]
-            }
+            "header": []
           },
           "response": []
         },
@@ -62,6 +51,14 @@
           "name": "Buscar usuario por id",
           "request": {
             "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "Atualizar usuario",
+          "request": {
+            "method": "PUT",
             "header": [],
             "url": {
               "raw": "http://localhost:3000/usuarios/1",
@@ -73,35 +70,6 @@
               "path": [
                 "usuarios",
                 "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Atualizar usuario",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"carlosabacaxi@gmail.com\",\r\n    \"nome\": \"Carlinhos 2.0\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/usuarios/3",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "usuarios",
-                "3"
               ]
             }
           },
@@ -131,192 +99,7 @@
     },
     {
       "name": "Exames",
-      "item": [
-        {
-          "name": "Listar exame",
-          "request": {
-            "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6IkZlbGlwZUBnbWFpbC5jb20iLCJub21lIjoiRmVsaXBlIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzc4MTkzODU5LCJleHAiOjE3NzgxOTc0NTl9.vV5PuvKA5v8sqltfJ4ivlkZvrq3b-VmDT3LDvSxjFco",
-                "type": "text"
-              }
-            ],
-            "url": {
-              "raw": "http://localhost:3000/exames?pagina=1&limite=20",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "exames"
-              ],
-              "query": [
-                {
-                  "key": "pagina",
-                  "value": "1"
-                },
-                {
-                  "key": "limite",
-                  "value": "20"
-                }
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Buscar exame por id",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/usuarios/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "usuarios",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Criar exames",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/exames",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "exames"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Editar exame",
-          "request": {
-            "method": "PUT",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"tipo_exame\": \"Colonoscopia\",\r\n    \"valor\": 1300,\r\n    \"descricao\": \"Exame de colonoscopia para detecção de polipos e câncer do cólon\",\r\n    \"data_exame\": \"2026-04-15T15:30:00.000Z\",\r\n    \"resultado\": \"\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/exames/1",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "exames",
-                "1"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Deletar exame",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "http://localhost:3000/usuarios/2",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "usuarios",
-                "2"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
-    },
-    {
-      "name": "Autenticação",
-      "item": [
-        {
-          "name": "Cadastro",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"carlos2@gmail.com\",\r\n    \"nome\": \"Carlos\",\r\n    \"senha\": \"Coxinha123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/cadastro",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "cadastro"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Login",
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n    \"email\": \"carlos2@gmail.com\",\r\n    \"senha\": \"Coxinha123\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "http://localhost:3000/login",
-              "protocol": "http",
-              "host": [
-                "localhost"
-              ],
-              "port": "3000",
-              "path": [
-                "login"
-              ]
-            }
-          },
-          "response": []
-        }
-      ]
+      "item": []
     }
   ]
 }

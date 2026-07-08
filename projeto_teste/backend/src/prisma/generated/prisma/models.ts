@@ -11,4 +11,7 @@
 export type * from './models/Usuario'
 export type * from './models/Exame'
 export type * from './models/Token'
+export type * from './models/Paciente'
+export type * from './models/Consulta'
+export type * from './models/Prontuario'
 export type * from './commonInputTypes'

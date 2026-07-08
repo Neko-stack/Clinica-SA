@@ -4,8 +4,6 @@ import { toast } from 'react-toastify'
 
 import { useNavigate } from 'react-router'
 
-import axios from 'axios'
-
 // Contexto
 import { useAuth } from '../../contexts/AuthContext'
 
@@ -67,6 +65,9 @@ const LoginForm = () => {
             setTimeout(() => navigate('/dashboard', 2000))
 
         } catch (error) {
+            localStorage.removeItem("accessToken")
+            localStorage.removeItem("refreshToken")
+            localStorage.removeItem("email")
             console.error('Erro ao verificar usuário', error)
             toast.error('Erro ao conectar com o servidor', {
                 autoClose: 3000

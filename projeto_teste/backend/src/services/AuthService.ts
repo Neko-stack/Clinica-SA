@@ -1,8 +1,8 @@
-import type { Usuario } from "../prisma/generated/prisma";
+import type { Usuario } from "../prisma/generated/prisma/client";
 import { createHash } from "../utils/createHash";
 import bcrypt from "bcrypt";
 import { signTokenAcesso, signTokenRefresh } from "../utils/jwt";
-import { AuthRepository, authRepository } from "../repositories/AuthRepository";
+import { AuthRepository, authRepository } from "../repository/authRepository";
 
 export class AuthService {
     constructor(private readonly repository: AuthRepository) { // TO-DO TIPAR SERVICE
@@ -64,6 +64,20 @@ export class AuthService {
         }
 
         throw new Error("Credenciais inválidas")
+
+    }
+
+    async resetPassword(email: string, novaSenha: string) {
+
+        const usuario = await this.repository.buscarUsuarioEmail(email)
+
+        if (!usuario) {
+            throw new Error("Usuário não encontrado.")
+        }
+
+        const senhaHash = await createHash(novaSenha)
+
+        return await this.repository.resetPassword(email, senhaHash)
 
     }
 }

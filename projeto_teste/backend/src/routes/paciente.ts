@@ -1,24 +1,35 @@
 import { Router } from "express";
-import { pacienteController } from "../controllers/PacienteController";
+import { pacienteController } from "../controller/PacienteController";
 
-export const pacienteRouter = Router();
 
-pacienteRouter.get("/pacientes", async (req, res) => {
-    return pacienteController.listarTodosPacientes(req, res);
-});
+const pacienteRouter = Router()
 
-pacienteRouter.get("/pacientes/:id", async (req, res) => {
-    return pacienteController.buscarPacienteId(req, res);
-});
 
-pacienteRouter.post("/pacientes", async (req, res) => {
-    return pacienteController.criarPaciente(req, res);
-});
+pacienteRouter.get('/paciente', async (req, res) => {
+  
+  return pacienteController.buscarTodos(req,res)
+})
 
-pacienteRouter.put("/pacientes/:id", async (req, res) => {
-    return pacienteController.atualizarPaciente(req, res);
-});
+pacienteRouter.get('/paciente/:id', async (req, res) => {
 
-pacienteRouter.delete("/pacientes/:id", async (req, res) => {
-    return pacienteController.deletarPaciente(req, res);
-});
+
+  return pacienteController.buscarPorId(req,res)
+})
+
+pacienteRouter.post("/paciente", async (req, res) => {
+ 
+  return pacienteController.criar(req,res)
+})
+
+pacienteRouter.put("/paciente/:id", async (req, res) => {
+
+
+  return pacienteController.atualizar(req,res)
+})
+
+pacienteRouter.delete('/paciente/:id', async (req, res) => {
+
+  return pacienteController.deletar(req,res)
+})
+
+export default pacienteRouter

@@ -9,8 +9,9 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const savedEmail = localStorage.getItem("email")
+        const savedToken = localStorage.getItem("accessToken")
 
-        if (savedEmail) {
+        if (savedEmail && savedToken) {
             setUser({ email: savedEmail })
         }
 
@@ -23,6 +24,8 @@ export const AuthProvider = ({ children }) => {
 
     const logout = () => {
         localStorage.removeItem("email")
+        localStorage.removeItem("accessToken")
+        localStorage.removeItem("refreshToken")
         setUser(null)
     }
 

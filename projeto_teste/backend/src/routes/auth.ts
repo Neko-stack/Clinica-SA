@@ -1,17 +1,16 @@
-import { Router } from "express";
-import { createHash } from "../utils/createHash";
-import { prisma } from "../prisma/prisma";
-import { signTokenAcesso, signTokenRefresh } from "../utils/jwt";
-import bcrypt from "bcrypt";
-import type { Usuario } from "../prisma/generated/prisma";
-import { authController } from "../controllers/AuthController";
+import {Router} from 'express';
+import { authController } from '../controller/AuthController';
 
-export const authRouter = Router();
+const routerAuth = Router()
 
-authRouter.post("/cadastro", async (req, res) => {
-    return authController.cadastrar(req, res)
+routerAuth.post("/cadastro", async (req, res) => {
+ 
+  return authController.cadastrar(req,res)
 })
 
-authRouter.post("/login", async (req, res) => {
-    return authController.logar(req, res)
+routerAuth.post("/login", async (req, res) => {
+  
+  return authController.logar(req,res)
+
 })
+export default routerAuth

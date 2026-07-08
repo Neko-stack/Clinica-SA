@@ -12,6 +12,7 @@ export function auth(req: Request, res: Response, next: NextFunction) {
     try {
         const token = header.slice("Bearer ".length)
         const payload = verificarTokenAcesso(token)
+        console.log(payload)
         if (!payload) return res.status(401).json({
             error: "invalid token"
         })

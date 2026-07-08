@@ -1,5 +1,11 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
   output   = "../prisma/generated/prisma"
 }
 
@@ -25,12 +31,12 @@ model Usuario {
 }
 
 model Exame {
-  id         Int      @id @default(autoincrement())
-  tipo_exame String
-  valor      Decimal
-  descricao  String
-  resultado  String
-  data_exame DateTime
+  id          Int      @id @default(autoincrement())
+  tipo_exame  String
+  valor       Decimal
+  descricao   String
+  resultado   String
+  data_exame  DateTime
   paciente_id Int
   paciente    Paciente @relation(fields: [paciente_id], references: [id])
 
@@ -55,30 +61,6 @@ model Token {
   @@map("token")
 }
 
-model Prontuario {
-  id                    Int       @id @default(autoincrement())
-  descricao             String
-  data                  DateTime?
-  medico_responsavel_id Int
-  paciente_id           Int
-  paciente              Paciente  @relation(fields: [paciente_id], references: [id])
-  usuario               Usuario   @relation(fields: [medico_responsavel_id], references: [id])
-
-  @@map("prontuario")
-}
-
-model Consulta {
-  id                    Int      @id @default(autoincrement())
-  motivo                String
-  data_consulta         DateTime
-  observacoes           String
-  medico_responsavel_id Int
-  paciente_id           Int
-  paciente              Paciente @relation(fields: [paciente_id], references: [id])
-
-  @@map("consulta")
-}
-
 model Paciente {
   id              Int          @id @default(autoincrement())
   nome            String
@@ -96,4 +78,28 @@ model Paciente {
   Exame           Exame[]
 
   @@map("paciente")
+}
+
+model Consulta {
+  id                    Int      @id @default(autoincrement())
+  motivo                String
+  data_consulta         DateTime
+  observacoes           String
+  medico_responsavel_id Int
+  paciente_id           Int
+  paciente              Paciente @relation(fields: [paciente_id], references: [id])
+
+  @@map("consulta")
+}
+
+model Prontuario {
+  id                    Int       @id @default(autoincrement())
+  descricao             String
+  data                  DateTime?
+  medico_responsavel_id Int
+  paciente_id           Int
+  paciente              Paciente  @relation(fields: [paciente_id], references: [id])
+  usuario               Usuario   @relation(fields: [medico_responsavel_id], references: [id])
+
+  @@map("prontuario")
 }

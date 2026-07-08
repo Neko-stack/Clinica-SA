@@ -1,44 +1,49 @@
-import type { Consulta } from "../prisma/generated/prisma";
-import {
-    consultaRepository,
-    ConsultaRepository
-} from "../repositories/ConsultaRepository";
+import { consultaRepository, type ConsultaRepository } from "../repository/consultaRepository";
 
 export class ConsultaService {
-    constructor(
-        private readonly repository: ConsultaRepository
-    ) {}
 
-    async listarTodasConsultas(pagina?: number, limite?: number) {
-        return await this.repository.listarTodasConsultas(
+    constructor(private readonly repository: ConsultaRepository) { }
+
+    async listarTdsConsultas( 
+        pagina?: number, 
+        limite?: number, 
+        pacienteId?: number 
+    ) {    
+        const consultas = await this.repository.listarTdsConsultas(
             pagina,
-            limite
-        );
+            limite,
+            pacienteId
+        )
+
+        return consultas
     }
 
     async buscarConsultaId(idConsulta: number) {
-        return await this.repository.buscarConsultaId(idConsulta);
+        const consulta = await this.repository.buscarConsultaId(idConsulta)
+        return consulta
     }
 
-    async criarConsulta(dadosConsulta: Consulta) {
-        return await this.repository.criarConsulta(dadosConsulta);
+    async criarConsulta(ddsConsulta: any) {
+        const consultaCriada = await this.repository.criarConsulta({
+            motivo: ddsConsulta.motivo || "",
+            data_consulta: new Date(ddsConsulta.data_consulta || new Date()),
+            observacoes: ddsConsulta.observacoes || "",
+            medico_responsavel_id: Number(ddsConsulta.medico_responsavel_id),
+            paciente_id: ddsConsulta.paciente_id!,
+        })
+
+        return consultaCriada
     }
 
-    async atualizarConsulta(
-        idConsulta: number,
-        dadosConsulta: Omit<Consulta, "id">
-    ) {
-        return await this.repository.atualizarConsulta(
-            idConsulta,
-            dadosConsulta
-        );
+    async atualizarConsulta(idConsulta: number, atualizarDados: any) {
+        const ddsConsultaAtualizados = await this.repository.atualizarConsulta(idConsulta, atualizarDados)
+        return ddsConsultaAtualizados
     }
 
     async deletarConsulta(idConsulta: number) {
-        return await this.repository.deletarConsulta(idConsulta);
+        const consultaDeletada = await this.repository.deletarConsulta(idConsulta)
+        return consultaDeletada
     }
 }
 
-export const consultaService = new ConsultaService(
-    consultaRepository
-);
+export const consultaService = new ConsultaService(consultaRepository);

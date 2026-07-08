@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { env } from '../env'
 import type { Usuario } from '../prisma/generated/prisma/client'
 
-interface Token extends Partial<Usuario> {
+interface Token extends Usuario{
     iat: number,
     exp: number
 }
@@ -22,12 +22,13 @@ export function signTokenRefresh(payload: Partial<Usuario>) {
 }
 
 export function verificarTokenAcesso(token: string) {
+    console.log(jwt.verify(token, env.chaveAcesso))
     return jwt.verify(token, env.chaveAcesso)
 }
 export function verificarTokenRefresh(token: string) {
     return jwt.verify(token, env.chaveRefresh)
 }
 
-export function getToken(token: string): Token {
-    return jwt.decode(token) as Token;
+export function getToken(token: string):Token {
+    return jwt.decode(token) as Token
 }

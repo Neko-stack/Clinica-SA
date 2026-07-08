@@ -1,40 +1,36 @@
-import type { Paciente } from "../prisma/generated/prisma";
-import {
-    pacienteRepository,
-    PacienteRepository
-} from "../repositories/PacienteRepository";
+import { pacienteRepository, type PacienteRepository } from "../repository/pacienteRepository";
 
 export class PacienteService {
-    constructor(
-        private readonly repository: PacienteRepository
-    ) {}
 
-    async listarTodosPacientes() {
-        return await this.repository.listarTodosPacientes();
+    constructor(private readonly repository: PacienteRepository) { }
+
+    async listarTdsPacientes(pagina?: number, limite?: number) {
+        return await this.repository.listarTdsPacientes(pagina, limite)
     }
 
     async buscarPacienteId(idPaciente: number) {
-        return await this.repository.buscarPacienteId(idPaciente);
+        return await this.repository.buscarPacienteId(idPaciente)
     }
 
-    async criarPaciente(dadosPaciente: Paciente) {
-        return await this.repository.criarPaciente(dadosPaciente);
+    async criarPaciente(ddsPaciente: any) {
+        return await this.repository.criarPaciente({
+            nome: ddsPaciente.nome,
+            cpf: ddsPaciente.cpf,
+            sexo: ddsPaciente.sexo,
+            data_nascimento: new Date(ddsPaciente.data_nascimento),
+            telefone: ddsPaciente.telefone,
+            email: ddsPaciente.email,
+            responsavel: ddsPaciente.responsavel || null,
+        })
     }
 
-    async atualizarPaciente(
-        idPaciente: number,
-        dadosPaciente: Omit<Paciente, "id">
-    ) {
-        return await this.repository.atualizarPaciente(
-            idPaciente,
-            dadosPaciente
-        );
+    async atualizarPaciente(idPaciente: number, atualizarDados: any) {
+        return await this.repository.atualizarPaciente(idPaciente, atualizarDados)
     }
 
     async deletarPaciente(idPaciente: number) {
-        return await this.repository.deletarPaciente(idPaciente);
+        return await this.repository.deletarPaciente(idPaciente)
     }
 }
 
-export const pacienteService =
-    new PacienteService(pacienteRepository);
+export const pacienteService = new PacienteService(pacienteRepository);

@@ -1,56 +1,89 @@
-import type { Paciente, PrismaClient } from "../prisma/generated/prisma";
+
+import { PrismaClient, type Paciente } from "../prisma/generated/prisma/client";
 import { prisma } from "../prisma/prisma";
 
-export class PacienteRepository {
-    constructor(private readonly prisma: PrismaClient) {
-        this.prisma = prisma;
+
+export class PacienteRepository{
+
+    constructor(private readonly prisma: PrismaClient ){
+        this.prisma = prisma
     }
 
-    async listarTodosPacientes() {
-        return await this.prisma.paciente.findMany();
-    }
 
-    async buscarPacienteId(idPaciente: number) {
-        return await this.prisma.paciente.findUnique({
-            where: { id: idPaciente }
-        });
-    }
+    async criar(dadosPaciente:Omit <Paciente ,"id">){
 
-    async criarPaciente(dadosPaciente: Partial<Paciente>) {
         return await this.prisma.paciente.create({
-            data: {
-                nome: dadosPaciente.nome || "",
-                cpf: dadosPaciente.cpf || "",
-                telefone: dadosPaciente.telefone || "",
-                email: dadosPaciente.email || "",
-                data_nascimento: new Date(dadosPaciente.data_nascimento || ""),
-                sexo: dadosPaciente.sexo || "",
-                convenio: dadosPaciente.convenio ?? null,
-                alergias: dadosPaciente.alergias ?? null,
-                observacoes: dadosPaciente.observacoes ?? null,
-                responsavel: dadosPaciente.responsavel ?? null
+            data:{
+                ...dadosPaciente
             }
-        });
+        })
     }
 
-    async atualizarPaciente(
-        idPaciente: number,
-        dadosPaciente: Omit<Paciente, "id">
-    ) {
-        return await this.prisma.paciente.update({
-            where: { id: idPaciente },
-            data: {
-                ...dadosPaciente,
-                data_nascimento: new Date(dadosPaciente.data_nascimento)
-            }
-        });
+    async buscarTodos(pagina?:number,limite?:number){
+
+         const existePaginacao = pagina! && limite!
+
+        if (!existePaginacao) return {paciente:await this.prisma.paciente.findMany()}
+        
+        const paciente = await this.prisma.exame.findMany({
+            skip: (pagina-1) * limite,
+            take: limite
+        })
+
+
+        const total = await this.prisma.exame.count()
+
+        const totalPaginas = Math.ceil(total/limite)
+
+
+        return {
+            paciente,
+            total,
+            totalPaginas,
+
+        }
+
+
     }
 
-    async deletarPaciente(idPaciente: number) {
+
+    async buscarPorId(id:number){
+
+        return await this.prisma.paciente.findUnique({
+            where:{
+                id
+            }
+        })
+    }
+
+    async deletar(id:number){
+
         return await this.prisma.paciente.delete({
-            where: { id: idPaciente }
-        });
+            where:{
+                id
+            }
+        })
     }
+
+    async atualizar(dadosPaciente: Paciente){
+
+        return await this.prisma.paciente.update({
+            data:{
+                nome: dadosPaciente.nome,
+                telefone:dadosPaciente.telefone,
+                email:dadosPaciente.email,
+                data_nascimento:dadosPaciente.data_nascimento,
+                sexo:dadosPaciente.sexo,
+                responsavel: dadosPaciente.responsavel
+            },
+            where:{
+                id:dadosPaciente.id
+            }
+
+        })
+    }
+
+
 }
 
-export const pacienteRepository = new PacienteRepository(prisma);
+export const pacienteRepository = new PacienteRepository(prisma)

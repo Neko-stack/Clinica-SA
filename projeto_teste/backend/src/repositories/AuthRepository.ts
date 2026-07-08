@@ -1,12 +1,16 @@
-import type { PrismaClient, Token, Usuario } from "../prisma/generated/prisma";
+import { PrismaClient, type Token, type Usuario } from "../prisma/generated/prisma/client";
 import { prisma } from "../prisma/prisma";
 
+
 export class AuthRepository {
+
     constructor(private readonly prisma: PrismaClient) {
         this.prisma = prisma
     }
+
+
     async cadastrar(dadosUsuario: Partial<Usuario>) {
-        return await this.prisma.usuario.create({
+        return this.prisma.usuario.create({
             data: {
                 email: dadosUsuario.email || "",
                 senha: dadosUsuario.senha || "",
@@ -14,21 +18,26 @@ export class AuthRepository {
                 role: dadosUsuario.role || "USER"
             }
         })
+
     }
 
     async existeUsuario(email: string) {
-        return await this.prisma.usuario.findUnique({
+        return this.prisma.usuario.findUnique({
             where: {
-                email: email
+                email: email || '',
             }
-        })
+
+        }
+        )
+        
     }
 
     async criarToken(dadosToken: Omit<Token, "id" | "revoked">) {
-        return await this.prisma.token.create({
-            data: dadosToken
-        })
-    }
+            return await this.prisma.token.create({
+                data: dadosToken
+            })
+        }
+
 
 }
 

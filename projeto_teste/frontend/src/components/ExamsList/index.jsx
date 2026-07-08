@@ -10,6 +10,22 @@ const ExamsList = () => {
 
     const limite = 10
 
+    const formatDateTime = (value) => {
+        if (!value) return "-"
+
+        const date = new Date(value)
+
+        if (Number.isNaN(date.getTime())) return "-"
+
+        return new Intl.DateTimeFormat("pt-BR", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+        }).format(date)
+    }
+
     useEffect(() => {
         const fetchExames = async () => {
             try {
@@ -60,7 +76,15 @@ const ExamsList = () => {
 
             {sortedExams.length ? (
                 <>
-                    <table className="w-full bg-white rounded-lg shadow overflow-hidden">
+                    <table className="exams-table w-full table-fixed bg-white rounded-lg shadow overflow-hidden">
+                        <colgroup>
+                            <col className="w-1/6" />
+                            <col className="w-1/6" />
+                            <col className="w-1/6" />
+                            <col className="w-1/6" />
+                            <col className="w-1/6" />
+                            <col className="w-1/6" />
+                        </colgroup>
                         <thead>
                             <tr className="bg-cyan-800 text-white">
                                 <th className="p-2">ID</th>
@@ -83,7 +107,7 @@ const ExamsList = () => {
                                         {exame.descricao}
                                     </td>
                                     <td className="p-2">
-                                        {exame.data_exame}
+                                        {formatDateTime(exame.data_exame)}
                                     </td>
                                     <td className="p-2">
                                         {exame.valor || "-"}

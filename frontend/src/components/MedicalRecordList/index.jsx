@@ -67,7 +67,13 @@ const MedicalRecordList = () => {
                 <strong>Telefone:</strong> {patient.telefone}
               </p>
               <p className="text-gray-700">
-                <strong>Convenio:</strong> {patient.convenio}
+                <strong>Convenio:</strong> {patient.convenio || "-"}
+              </p>
+              <p className="text-gray-700">
+                <strong>Alergias:</strong> {patient.alergias || "-"}
+              </p>
+              <p className="text-gray-700">
+                <strong>Anotacoes rapidas:</strong> {patient.observacoes || "-"}
               </p>
               <Link
                 to={`/paciente/${patient.id}`}

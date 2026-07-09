@@ -20,6 +20,9 @@ export class PacienteService {
             data_nascimento: new Date(ddsPaciente.data_nascimento),
             telefone: ddsPaciente.telefone,
             email: ddsPaciente.email,
+            convenio: ddsPaciente.convenio || null,
+            alergias: ddsPaciente.alergias || null,
+            observacoes: ddsPaciente.observacoes || null,
             responsavel: ddsPaciente.responsavel || null,
         })
     }

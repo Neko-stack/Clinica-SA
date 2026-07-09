@@ -21,7 +21,6 @@ const DashboardLayout = () => {
                     <h1 className="text-xl font-bold text-cyan-800 dark:text-white">Painel do Sistema</h1>                    {
                         user && (
                             <div className="flex items-center gap-4">
-                                <span className="text-gray-700 dark:text-white">Bem Vindo, {user.email}</span>
                                 <button
                                     onClick={toggleTheme}
                                     className="flex items-center gap-2 border border-cyan-700 dark:border-white px-3 py-1 rounded text-cyan-800 dark:text-white hover:bg-cyan-700 hover:text-white dark:hover:bg-black dark:hover:text-white transition cursor-pointer"
@@ -29,6 +28,7 @@ const DashboardLayout = () => {
                                     {darkMode ? <MdLightMode size={18} /> : <MdDarkMode size={18} />}
                                     <span>{darkMode ? "Claro" : "Escuro"}</span>
                                 </button>
+                                <span className="text-gray-700 dark:text-white">Bem Vindo, {user.email}</span>
                                 <button
                                     onClick={logout}
                                     className="px-3 py-1 bg-red-500 text-white rounded hover:bg-red-600 transition cursor-pointer"

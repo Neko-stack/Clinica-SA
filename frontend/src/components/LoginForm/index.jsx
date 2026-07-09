@@ -15,6 +15,10 @@ import apiClient from '../../api/api'
 const LoginForm = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [resetEmail, setResetEmail] = useState("")
+    const [newPassword, setNewPassword] = useState("")
+    const [confirmNewPassword, setConfirmNewPassword] = useState("")
+    const [isResettingPassword, setIsResettingPassword] = useState(false)
 
     const navigate = useNavigate()
 
@@ -23,6 +27,7 @@ const LoginForm = () => {
     // controle do modal
 
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isResetModalOpen, setIsResetModalOpen] = useState(false)
 
     // autenticação do usuário (verificação)
 
@@ -75,6 +80,60 @@ const LoginForm = () => {
         }
     }
 
+    const resetPasswordForm = () => {
+        setResetEmail("")
+        setNewPassword("")
+        setConfirmNewPassword("")
+    }
+
+    const handleResetPassword = async (e) => {
+        e.preventDefault()
+
+        if (newPassword !== confirmNewPassword) {
+            toast.error("As senhas nao correspondem", {
+                autoClose: 2000,
+                hideProgressBar: true
+            })
+            return
+        }
+
+        if (newPassword.length < 8) {
+            toast.error("A senha deve ter pelo menos 8 caracteres", {
+                autoClose: 2000,
+                hideProgressBar: true
+            })
+            return
+        }
+
+        setIsResettingPassword(true)
+
+        try {
+            await apiClient.put("/reset-password", {
+                email: resetEmail,
+                senha: newPassword
+            })
+
+            toast.success("Senha alterada com sucesso!", {
+                autoClose: 2000,
+                hideProgressBar: true
+            })
+
+            resetPasswordForm()
+            setIsResetModalOpen(false)
+        } catch (error) {
+            console.error("Erro ao alterar senha", error)
+            toast.error(
+                error.response?.data?.mensagem || "Erro ao alterar senha",
+                {
+                    autoClose: 3000,
+                    hideProgressBar: true
+                }
+            )
+        } finally {
+            setIsResettingPassword(false)
+        }
+    }
+
 
 
     return (
@@ -116,7 +175,7 @@ const LoginForm = () => {
             </form>
 
             <div className='flex justify-between mt-4 text-sm'>
-                <button onClick={() => toast.info('Funcionalidade em desenvolvimento')} className='text-blue-600 hover:underline cursor-pointer'>
+                <button onClick={() => setIsResetModalOpen(true)} className='text-blue-600 hover:underline cursor-pointer'>
                     Esqueceu sua senha?
                 </button>
 
@@ -127,6 +186,67 @@ const LoginForm = () => {
 
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <RegisterUser />
+            </Modal>
+
+            <Modal
+                isOpen={isResetModalOpen}
+                onClose={() => {
+                    resetPasswordForm()
+                    setIsResetModalOpen(false)
+                }}
+            >
+                <div className='w-full max-w-md p-6 bg-white rounded-xl'>
+                    <h2 className='text-2xl font-bold mb-6 text-center'>Redefinir senha</h2>
+
+                    <form onSubmit={handleResetPassword} className='space-y-4'>
+                        <fieldset>
+                            <label htmlFor='reset-email' className='block text-sm font-medium mb-1'>Email:</label>
+                            <input
+                                type='email'
+                                id='reset-email'
+                                value={resetEmail}
+                                onChange={(e) => setResetEmail(e.target.value)}
+                                required
+                                className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                            />
+                        </fieldset>
+
+                        <fieldset>
+                            <label htmlFor='new-password' className='block text-sm font-medium mb-1'>Nova senha:</label>
+                            <input
+                                type='password'
+                                id='new-password'
+                                value={newPassword}
+                                onChange={(e) => setNewPassword(e.target.value)}
+                                required
+                                minLength={8}
+                                className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                            />
+                        </fieldset>
+
+                        <fieldset>
+                            <label htmlFor='confirm-new-password' className='block text-sm font-medium mb-1'>Confirmar nova senha:</label>
+                            <input
+                                type='password'
+                                id='confirm-new-password'
+                                value={confirmNewPassword}
+                                onChange={(e) => setConfirmNewPassword(e.target.value)}
+                                required
+                                minLength={8}
+                                className='w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500'
+                            />
+                        </fieldset>
+
+                        <button
+                            type='submit'
+                            disabled={isResettingPassword}
+                            className={`w-full p-2 rounded-lg text-white mt-4 ${isResettingPassword ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700 cursor-pointer'
+                                } transition-colors`}
+                        >
+                            {isResettingPassword ? "Salvando..." : "Alterar senha"}
+                        </button>
+                    </form>
+                </div>
             </Modal>
 
 

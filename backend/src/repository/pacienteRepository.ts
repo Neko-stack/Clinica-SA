@@ -42,6 +42,9 @@ export class PacienteRepository {
                 sexo: ddsPaciente.sexo || "",
                 telefone: ddsPaciente.telefone || "",
                 email: ddsPaciente.email || "",
+                convenio: ddsPaciente.convenio || null,
+                alergias: ddsPaciente.alergias || null,
+                observacoes: ddsPaciente.observacoes || null,
                 responsavel: ddsPaciente.responsavel || null,
             }
         })

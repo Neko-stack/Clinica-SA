@@ -64,10 +64,10 @@ const MedicalRecordList = () => {
                 <strong>Nome:</strong> {patient.nome}
               </p>
               <p className="text-gray-700">
-                <strong>Telefone:</strong> {patient.telefone || "-"}
+                <strong>Telefone:</strong> {patient.telefone}
               </p>
               <p className="text-gray-700">
-                <strong>Convenio:</strong> {patient.convenio || "-"}
+                <strong>Convenio:</strong> {patient.convenio}
               </p>
               <Link
                 to={`/paciente/${patient.id}`}
